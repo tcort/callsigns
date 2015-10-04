@@ -50,7 +50,6 @@ Configure the service:
 
 ## TODO
 
-* Robots
 * Finish `README.md`
 * Github!
 * i18n/l10n
