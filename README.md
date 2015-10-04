@@ -1,7 +1,13 @@
 # callsigns
 
+This is the code that powers [callsigns.ca](http://callsigns.ca).
+It started with the simple desire for a simple mobile friendly way of
+searching the Canadian Callsign Database and ended with me developing
+my own website.
+
 ## Requirements
 
+* systemd
 * nginx
 * mysql
 * wget
@@ -47,17 +53,16 @@ Configure the service:
     systemctl enable callsigns
     systemctl start callsigns
 
-
 ## TODO
 
-* Finish `README.md`
-* Github!
-* i18n/l10n
-* Full text search, pagination, etc.
+Here's a list of features I'm thinking of adding:
+
+* i18n/l10n (initially English and French).
+* Full text search, pagination of results, etc.
 
 ## License
 
-ISC License:
+Code License:
 
 ```
 Copyright (c) 2015 Thomas Cort <linuxgeek@gmail.com>
@@ -74,3 +79,6 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
+
+Data License: see [Terms and Conditions](http://www.ic.gc.ca/eic/site/icgc.nsf/eng/h_07033.html)
+on the Industry Canada website.
