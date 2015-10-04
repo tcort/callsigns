@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Query the Canadian Amateur Radio Callsign Database">
+    <meta name="author" content="Thomas Cort <linuxgeek@gmail.com>">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Callsigns</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="callsigns.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form class="form-callsign" method="get" action="/">
+        <label for="inputCallsign" class="sr-only">Callsign</label>
+        <input name="callsign" type="text" id="inputCallsign" class="form-control" placeholder="callsign" required autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+      </form>
+
+    <hr/>
+
+    <div id="result">
+      {{#if err}}
+        <div class="alert alert-{{err.type}}" role="alert">
+          {{err.message}}
+        </div>
+      {{/if}}
+      {{#if result}}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{result.callsign}}</h3>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Mailing Address</h3>
+          </div>
+          <div class="panel-body">
+            <p>
+              {{result.first_name}} {{result.surname}}<br/>
+              {{result.address_line}}<br/>
+              {{result.city}}, {{result.prov_cd}} {{result.postal_code}}            
+            </p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Qualifications</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+              {{#if result.qual_a}}
+                <li>Basic</li>
+              {{/if}}
+              {{#if result.qual_e}}
+                <li>Basic with Honours</li>
+              {{/if}}
+              {{#if result.qual_d}}
+                <li>Advanced</li>
+              {{/if}}
+              {{#if result.qual_b}}
+                <li>5 WPM</li>
+              {{/if}}
+              {{#if result.qual_c}}
+                <li>12 WPM</li>
+              {{/if}}
+            </ul>
+          </div>
+        </div>
+        {{#if result.club_prov_cd}}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Club Address</h3>
+            </div>
+            <div class="panel-body">
+              <p>
+                {{result.club_name}}<br/>
+                {{#if result.club_name_2}}{{result.club_name_2}}<br/>{{/if}}
+                {{result.club_address}}<br/>
+                {{result.club_city}}, {{result.club_prov_cd}} {{result.club_postal_code}}
+              </p>
+            </div>
+          </div>
+        {{/if}}
+      {{/if}}
+    </div>
+
+    <hr/>
+
+    <div id="footer">
+      This is a personal website; it is not affiliated with any organization.
+      The official callsign search site by Industry Canada is available at <a href="http://apc-cap.ic.gc.ca/pls/apc_anon/query_amat_cs$.startup">http://apc-cap.ic.gc.ca/pls/apc_anon/query_amat_cs$.startup</a>.
+      This website contains a non-commercial reproduction of the Amateur Call Sign List.
+      The complete title of the material reproduced is 'Amateur Call Sign List (delimited TXT format)' by Industry Canada.
+      The reproduction is a copy of the version available at <a href="http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip">http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip</a>.
+      {{#if last_update}}That file was retrieved at or around {{last_update}}.{{/if}}
+      For complete Terms and Conditions, see <a href="http://www.ic.gc.ca/eic/site/icgc.nsf/eng/h_07033.html">http://www.ic.gc.ca/eic/site/icgc.nsf/eng/h_07033.html</a>.
+      Questions or comments should be directed to <a href="mailto:linuxgeek@gmail.com">linuxgeek@gmail.com</a>.
+    </div>
+
+  </div> <!-- /container -->
+
+</body>
+</html>

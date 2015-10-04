@@ -1,0 +1,14 @@
+[Unit]
+Description=callsigns
+
+[Service]
+ExecStart=/var/node/callsigns/index.js
+Restart=always
+User=tcort
+Group=tcort
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/var/node/callsigns
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,7 @@
+{
+    "host": "localhost",
+    "user": "callsigns",
+    "password": "callsigns",
+    "database": "callsigns",
+    "root_password": "abc123"
+}
