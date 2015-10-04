@@ -4,8 +4,7 @@
   "description": "Query the Canadian Amateur Radio Callsign Database",
   "main": "index.js",
   "scripts": {
-    "postinstall": "cp -n config.json.example config.json",
-    "test": "mocha -R spec"
+    "postinstall": "cp -n config.json.example config.json"
   },
   "repository": {
     "type": "git",
