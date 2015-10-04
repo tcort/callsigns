@@ -50,8 +50,7 @@ Configure the service:
 
 ## TODO
 
-* non-homedir install
-* Favicon (some sort of antenna?)
+* Robots
 * Finish `README.md`
 * Github!
 * i18n/l10n

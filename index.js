@@ -2,6 +2,7 @@
 
 "use strict";
 
+var favicon = require('serve-favicon');
 var mysql = require('mysql');
 var pool = mysql.createPool(require('./config'));
 process.on('exit', function () {
@@ -17,6 +18,8 @@ var app = express();
 app.set('view engine', 'hbs');
 
 app.use(helmet());
+
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
