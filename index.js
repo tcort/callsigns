@@ -60,7 +60,7 @@ app.get('/', function (req, res) {
     }
 
     var page = req.query.page || 1;
-    var limit = 42;
+    var limit = 10;
     var offset = limit * (page - 1);
 
     pool.getConnection(function (err, conn) {
