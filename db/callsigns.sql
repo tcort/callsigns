@@ -9,17 +9,18 @@ create table if not exists callsigns (
     city varchar(35),
     prov_cd varchar(2),
     postal_code char(10),
-    qual_a char(1),
-    qual_b char(1),
-    qual_c char(1),
-    qual_d char(1),
-    qual_e char(1),
+    qual_a char(1) COMMENT 'Basic',
+    qual_b char(1) COMMENT '5 WPM',
+    qual_c char(1) COMMENT '12 WPM',
+    qual_d char(1) COMMENT 'Advanced',
+    qual_e char(1) COMMENT 'Basic with Honours',
     club_name varchar(70),
     club_name_2 varchar(70),
     club_address varchar(70),
     club_city varchar(35),
     club_prov_cd varchar(2),
-    club_postal_code varchar(7)
+    club_postal_code varchar(7),
+    FULLTEXT(callsign, first_name, surname, address_line, city, prov_cd, postal_code, club_name, club_name_2, club_address, club_city, club_prov_cd, club_postal_code)
 ) ENGINE=InnoDB;
 
 create table if not exists sync (

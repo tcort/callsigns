@@ -31,10 +31,10 @@
     <title>Callsigns</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="callsigns.css" rel="stylesheet">
+    <link href="/callsigns.css" rel="stylesheet">
 
   </head>
 
@@ -43,20 +43,20 @@
     <div class="container">
 
       <form class="form-callsign" method="get" action="/">
-        <label for="inputCallsign" class="sr-only">Callsign</label>
-        <input name="callsign" type="text" id="inputCallsign" class="form-control" placeholder="callsign" required autofocus>
+        <label for="inputCriterion" class="sr-only">Search Criterion</label>
+        <input name="criterion" type="text" id="inputCriterion" class="form-control" placeholder="" required autofocus>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
       </form>
 
-    <hr/>
-
     <div id="result">
       {{#if err}}
+        <hr/>
         <div class="alert alert-{{err.type}}" role="alert">
           {{err.message}}
         </div>
       {{/if}}
       {{#if result}}
+        <hr/>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">{{result.callsign}}</h3>
@@ -70,7 +70,7 @@
             <p>
               {{result.first_name}} {{result.surname}}<br/>
               {{result.address_line}}<br/>
-              {{result.city}}, {{result.prov_cd}} {{result.postal_code}}            
+              {{#if result.city}}{{result.city}},{{/if}} {{result.prov_cd}} {{result.postal_code}}
             </p>
           </div>
         </div>
@@ -90,10 +90,10 @@
                 <li>Advanced</li>
               {{/if}}
               {{#if result.qual_b}}
-                <li>5 WPM</li>
+                <li>Morse Code (5 WPM)</li>
               {{/if}}
               {{#if result.qual_c}}
-                <li>12 WPM</li>
+                <li>Morse Code (12 WPM)</li>
               {{/if}}
             </ul>
           </div>
@@ -108,11 +108,40 @@
                 {{result.club_name}}<br/>
                 {{#if result.club_name_2}}{{result.club_name_2}}<br/>{{/if}}
                 {{result.club_address}}<br/>
-                {{result.club_city}}, {{result.club_prov_cd}} {{result.club_postal_code}}
+                {{#if result.club_city}}{{result.club_city}},{{/if}} {{result.club_prov_cd}} {{result.club_postal_code}}
               </p>
             </div>
           </div>
         {{/if}}
+      {{/if}}
+      {{#if resultSet}}
+        <hr/>
+        <div class="list-group">
+          {{#each resultSet as |r|}}
+             <a href="/callsigns/{{r.callsign}}" class="list-group-item">{{r.callsign}} - {{#if r.club_prov_cd}}{{r.club_name}} {{r.club_name_2}} -{{/if}} {{r.first_name}} {{r.surname}}</a>
+          {{/each}}
+          <div class="text-center">
+            <nav>
+              <ul class="pagination">
+                {{#paginate pagination type="first"}}
+                  <li {{#if disabled}}class="disabled"{{/if}}><a href="/?page={{n}}&criterion={{../criterion}}">First</a></li>
+                {{/paginate}}
+                {{#paginate pagination type="previous"}}
+                  <li {{#if disabled}}class="disabled"{{/if}}><a href="/?page={{n}}&criterion={{../criterion}}">Prev</a></li>
+                {{/paginate}}
+                {{#paginate pagination type="middle" limit="7"}}
+                  <li {{#if active}}class="active"{{/if}}><a href="/?page={{n}}&criterion={{../criterion}}">{{n}}</a></li>
+                {{/paginate}}
+                {{#paginate pagination type="next"}}
+                  <li {{#if disabled}}class="disabled"{{/if}}><a href="/?page={{n}}&criterion={{../criterion}}">Next</a></li>
+                {{/paginate}}
+                {{#paginate pagination type="last"}}
+                  <li {{#if disabled}}class="disabled"{{/if}}><a href="/?page={{n}}&criterion={{../criterion}}">Last</a></li>
+                {{/paginate}}
+              </ul>
+            </nav>
+          </div>
+        </div>
       {{/if}}
     </div>
 
@@ -130,6 +159,9 @@
     </div>
 
   </div> <!-- /container -->
+
+  <script src="/jquery/dist/jquery.min.js"></script>
+  <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>

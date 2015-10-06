@@ -3,5 +3,6 @@
     "user": "callsigns",
     "password": "callsigns",
     "database": "callsigns",
-    "root_password": "abc123"
+    "root_password": "abc123",
+    "multipleStatements": true
 }

@@ -58,7 +58,6 @@ Configure the service:
 Here's a list of features I'm thinking of adding:
 
 * i18n/l10n (initially English and French).
-* Full text search, pagination of results, etc.
 
 ## License
 
