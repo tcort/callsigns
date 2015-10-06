@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="Query the Canadian Amateur Radio Callsign Database">
+    <meta name="description" content="{{__ "Amateur Search"}}">
     <meta name="author" content="Thomas Cort <linuxgeek@gmail.com>">
 
     <!-- favicon -->
@@ -28,7 +28,7 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Callsigns</title>
+    <title>{{__ "Callsigns"}}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -42,10 +42,22 @@
 
     <div class="container">
 
+      <div class="dropdown pull-right">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          {{__ "Lang"}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a href="/lang/en">{{__ "English"}}</a></li>
+          <li><a href="/lang/fr">{{__ "Français"}}</a></li>
+        </ul>
+      </div>
+
+      <hr/>
+
       <form class="form-callsign" method="get" action="/">
-        <label for="inputCriterion" class="sr-only">Search Criterion</label>
+        <label for="inputCriterion" class="sr-only">{{__ "Search Criteria"}}</label>
         <input name="criterion" type="text" id="inputCriterion" class="form-control" placeholder="" required autofocus>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{{__ "Search"}}</button>
       </form>
 
     <div id="result">
@@ -64,7 +76,7 @@
         </div>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">Mailing Address</h3>
+            <h3 class="panel-title">{{__ "Details"}}</h3>
           </div>
           <div class="panel-body">
             <p>
@@ -76,24 +88,24 @@
         </div>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">Qualifications</h3>
+            <h3 class="panel-title">{{__ "Qualifications"}}</h3>
           </div>
           <div class="panel-body">
             <ul>
               {{#if result.qual_a}}
-                <li>Basic</li>
+                <li>{{__ "Basic"}}</li>
               {{/if}}
               {{#if result.qual_e}}
-                <li>Basic with Honours</li>
+                <li>{{__ "Basic with Honours"}}</li>
               {{/if}}
               {{#if result.qual_d}}
-                <li>Advanced</li>
+                <li>{{__ "Advanced"}}</li>
               {{/if}}
               {{#if result.qual_b}}
-                <li>Morse Code (5 WPM)</li>
+                <li>{{__ "Morse Code (5 WPM)"}}</li>
               {{/if}}
               {{#if result.qual_c}}
-                <li>Morse Code (12 WPM)</li>
+                <li>{{__ "Morse Code (12 WPM)"}}</li>
               {{/if}}
             </ul>
           </div>
@@ -101,7 +113,7 @@
         {{#if result.club_prov_cd}}
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Club Address</h3>
+              <h3 class="panel-title">{{__ "Club Details"}}</h3>
             </div>
             <div class="panel-body">
               <p>
@@ -142,14 +154,11 @@
     <hr/>
 
     <div id="footer">
-      This is a personal website; it is not affiliated with any organization.
-      The official callsign search site by Industry Canada is available at <a href="http://apc-cap.ic.gc.ca/pls/apc_anon/query_amat_cs$.startup">http://apc-cap.ic.gc.ca/pls/apc_anon/query_amat_cs$.startup</a>.
-      This website contains a non-commercial reproduction of the Amateur Call Sign List.
-      The complete title of the material reproduced is 'Amateur Call Sign List (delimited TXT format)' by Industry Canada.
-      The reproduction is a copy of the version available at <a href="http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip">http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip</a>.
-      {{#if last_update}}That file was retrieved at or around {{last_update}}.{{/if}}
-      For complete Terms and Conditions, see <a href="http://www.ic.gc.ca/eic/site/icgc.nsf/eng/h_07033.html">http://www.ic.gc.ca/eic/site/icgc.nsf/eng/h_07033.html</a>.
-      Questions or comments should be directed to <a href="mailto:linuxgeek@gmail.com">linuxgeek@gmail.com</a>.
+      {{__ "The complete title of the materials reproduced is 'Amateur Call Sign List (delimited TXT format)' by Industry Canada."}}
+      {{__ "The reproduction is a copy of the version available at:"}} <a href="{{__ "http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip"}}">{{__ "http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip"}}</a>.
+      (<a href="{{__ "http://www.ic.gc.ca/eic/site/icgc.nsf/eng/h_07033.html"}}">{{__ "Terms and Conditions"}}</a>).
+      {{#if last_update}}{{__ "Date modified:"}} {{last_update}}.{{/if}}
+      {{__ "Contact me by email:"}} <a href="mailto:linuxgeek@gmail.com">linuxgeek@gmail.com</a>.
     </div>
 
   </div> <!-- /container -->
