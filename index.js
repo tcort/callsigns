@@ -15,6 +15,9 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var helmet = require('helmet');
 var path = require('path');
+var fs = require('fs');
+var FileStreamRotator = require('file-stream-rotator');
+var morgan = require('morgan');
 var i18n = require('i18n');
 
 // i18n
@@ -37,6 +40,19 @@ hbs.registerHelper('__n', function () {
 
 hbs.registerHelper('paginate', paginate);
 
+// configure logging
+var logDirectory = path.join(__dirname, 'logs');
+if (!fs.existsSync(logDirectory)) {
+    fs.mkdirSync(logDirectory);
+}
+
+var accessLogStream = FileStreamRotator.getStream({
+    filename: path.join(logDirectory, 'access-%DATE%.log'),
+    frequency: 'daily',
+    verbose: false,
+    date_format: 'YYYY-MM-DD'
+});
+
 // express
 
 var app = express();
@@ -46,6 +62,7 @@ app.set('view engine', 'hbs');
 app.use(helmet());          // put on the helmet before anything else
 app.use(cookieParser());    // needed for i18n
 app.use(i18n.init);         // setup i18n before we do anything that outputs text in a particular language
+app.use(morgan('combined', { stream: accessLogStream })); // logging
 
 // static routes first -- there is more static content than dynamic.
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
