@@ -154,7 +154,7 @@ app.get('/callsigns/:callsign', function (req, res) {
 // Set the locale cookie and redirect back to '/'
 app.get('/lang/:locale', function (req, res) {
     res.cookie('locale', req.params.locale, { maxAge: 60*60*24*30 /* 30 days */, httpOnly: true });
-    res.redirect('/');
+    res.redirect('back');
 });
 
 app.listen(3000);
