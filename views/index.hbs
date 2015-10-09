@@ -81,7 +81,7 @@
           <div class="panel-body">
             <p>
               {{result.first_name}} {{result.surname}}<br/>
-              {{result.address_line}}<br/>
+              {{#if result.address_line}}{{result.address_line}}<br/>{{/if}}
               {{#if result.city}}{{result.city}},{{/if}} {{result.prov_cd}} {{result.postal_code}}
             </p>
           </div>
@@ -119,7 +119,7 @@
               <p>
                 {{result.club_name}}<br/>
                 {{#if result.club_name_2}}{{result.club_name_2}}<br/>{{/if}}
-                {{result.club_address}}<br/>
+                {{#if result.club_address}}{{result.club_address}}<br/>{{/if}}
                 {{#if result.club_city}}{{result.club_city}},{{/if}} {{result.club_prov_cd}} {{result.club_postal_code}}
               </p>
             </div>
