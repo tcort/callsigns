@@ -4,7 +4,7 @@
 
 var mysql = require('mysql');
 var pool = mysql.createPool(require('./config'));
-process.on('exit', function () {
+process.on('exit', function onExit() {
     pool.end();
 });
 
@@ -31,11 +31,11 @@ i18n.configure({
 
 // handlebars helpers
 
-hbs.registerHelper('__', function () {
+hbs.registerHelper('__', function __() {
   return i18n.__.apply(this, arguments);
 });
 
-hbs.registerHelper('__n', function () {
+hbs.registerHelper('__n', function __n() {
   return i18n.__n.apply(this, arguments);
 });
 
@@ -71,9 +71,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
 // lookup last_update timestamp
-app.use(function (req, res, next) {
+app.use(function lookupLastUpdate(req, res, next) {
 
-    pool.getConnection(function (err, conn) {
+    pool.getConnection(function getConnection(err, conn) {
         if (err) {
             res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             if (conn) {
@@ -81,7 +81,7 @@ app.use(function (req, res, next) {
             }
             return;
         }
-        conn.query('SELECT MAX(last_update) AS last_update FROM sync', function (err, result) {
+        conn.query('SELECT MAX(last_update) AS last_update FROM sync', function query(err, result) {
             if (err || result.length !== 1) {
                 res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             } else {
@@ -94,7 +94,7 @@ app.use(function (req, res, next) {
 });
 
 // perform search (if criterion is supplied), render the page, result set, or error. If a single result is found, redirect to that page
-app.get('/', function (req, res) {
+app.get('/', function getRoot(req, res) {
 
     // render page if no search criterion was supplied (no error, no result, no result set)
     if (!req.query.criterion || typeof req.query.criterion !== 'string') {
@@ -106,7 +106,7 @@ app.get('/', function (req, res) {
     var limit = 10;
     var offset = limit * (page - 1);
 
-    pool.getConnection(function (err, conn) {
+    pool.getConnection(function getConnection(err, conn) {
         if (err) {
             res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             if (conn) {
@@ -114,7 +114,7 @@ app.get('/', function (req, res) {
             }
             return;
         }
-        conn.query('SELECT SQL_CALC_FOUND_ROWS *, MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) AS relevance FROM callsigns WHERE MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) HAVING relevance > 0.2 ORDER BY relevance DESC LIMIT ?, ?; SELECT FOUND_ROWS() AS num_results', [ req.query.criterion, req.query.criterion, offset, limit ], function (err, results) {
+        conn.query('SELECT SQL_CALC_FOUND_ROWS *, MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) AS relevance FROM callsigns WHERE MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) HAVING relevance > 0.2 ORDER BY relevance DESC LIMIT ?, ?; SELECT FOUND_ROWS() AS num_results', [ req.query.criterion, req.query.criterion, offset, limit ], function query(err, results) {
             if (err) { // error, display error
                 res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             } else if (results[0].length === 0) { // no results, display no results message
@@ -130,8 +130,8 @@ app.get('/', function (req, res) {
 });
 
 // Display a single result
-app.get('/callsigns/:callsign', function (req, res) {
-    pool.getConnection(function (err, conn) {
+app.get('/callsigns/:callsign', function getCallsign(req, res) {
+    pool.getConnection(function getConnect(err, conn) {
         if (err) {
             res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             if (conn) {
@@ -139,7 +139,7 @@ app.get('/callsigns/:callsign', function (req, res) {
             }
             return;
         }
-        conn.query('SELECT * FROM callsigns WHERE callsign = ?', [ req.params.callsign ], function (err, results) {
+        conn.query('SELECT * FROM callsigns WHERE callsign = ?', [ req.params.callsign ], function query(err, results) {
             if (err || results.length > 1) { // error, display error
                 res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             } else if (results.length === 0) { // no results, display no results message
@@ -153,7 +153,7 @@ app.get('/callsigns/:callsign', function (req, res) {
 });
 
 // Set the locale cookie and redirect back to '/'
-app.get('/lang/:locale', function (req, res) {
+app.get('/lang/:locale', function setLang(req, res) {
     res.cookie('locale', req.params.locale, { maxAge: 60*60*24*30 /* 30 days */, httpOnly: true });
     res.redirect('back');
 });
