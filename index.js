@@ -71,7 +71,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
 // lookup last_update timestamp
-app.get('/', function (req, res, next) {
+app.use(function (req, res, next) {
 
     pool.getConnection(function (err, conn) {
         if (err) {
