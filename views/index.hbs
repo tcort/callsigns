@@ -55,8 +55,8 @@
       <hr/>
 
       <form class="form-callsign" method="get" action="/">
-        <label for="inputCriterion" class="sr-only">{{__ "Search Criteria"}}</label>
-        <input name="criterion" type="text" id="inputCriterion" class="form-control" placeholder="" required autofocus>
+        <label for="inputq" class="sr-only">{{__ "Search Criteria"}}</label>
+        <input name="q" type="text" id="inputq" class="form-control" placeholder="" required autofocus>
         <button class="btn btn-lg btn-primary btn-block" type="submit">{{__ "Search"}}</button>
       </form>
 
@@ -136,13 +136,13 @@
             <nav>
               <ul class="pagination">
                 {{#paginate pagination type="previous"}}
-                  <li {{#if disabled}}class="disabled"{{/if}}><a href="/?page={{n}}&criterion={{../criterion}}">&laquo;</a></li>
+                  <li {{#if disabled}}class="disabled"{{/if}}><a href="/?page={{n}}&q={{../q}}">&laquo;</a></li>
                 {{/paginate}}
                 {{#paginate pagination type="middle" limit="7"}}
-                  <li {{#if active}}class="active"{{/if}}><a href="/?page={{n}}&criterion={{../criterion}}">{{n}}</a></li>
+                  <li {{#if active}}class="active"{{/if}}><a href="/?page={{n}}&q={{../q}}">{{n}}</a></li>
                 {{/paginate}}
                 {{#paginate pagination type="next"}}
-                  <li {{#if disabled}}class="disabled"{{/if}}><a href="/?page={{n}}&criterion={{../criterion}}">&raquo;</a></li>
+                  <li {{#if disabled}}class="disabled"{{/if}}><a href="/?page={{n}}&q={{../q}}">&raquo;</a></li>
                 {{/paginate}}
               </ul>
             </nav>

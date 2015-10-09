@@ -93,11 +93,11 @@ app.use(function lookupLastUpdate(req, res, next) {
     });
 });
 
-// perform search (if criterion is supplied), render the page, result set, or error. If a single result is found, redirect to that page
+// perform search (if q is supplied), render the page, result set, or error. If a single result is found, redirect to that page
 app.get('/', function getRoot(req, res) {
 
-    // render page if no search criterion was supplied (no error, no result, no result set)
-    if (!req.query.criterion || typeof req.query.criterion !== 'string') {
+    // render page if no search q was supplied (no error, no result, no result set)
+    if (!req.query.q || typeof req.query.q !== 'string') {
         res.render('index', { err: null, result: null, resultSet: null });
         return;
     }
@@ -114,7 +114,7 @@ app.get('/', function getRoot(req, res) {
             }
             return;
         }
-        conn.query('SELECT SQL_CALC_FOUND_ROWS *, MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) AS relevance FROM callsigns WHERE MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) HAVING relevance > 0.2 ORDER BY relevance DESC LIMIT ?, ?; SELECT FOUND_ROWS() AS num_results', [ req.query.criterion, req.query.criterion, offset, limit ], function query(err, results) {
+        conn.query('SELECT SQL_CALC_FOUND_ROWS *, MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) AS relevance FROM callsigns WHERE MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) HAVING relevance > 0.2 ORDER BY relevance DESC LIMIT ?, ?; SELECT FOUND_ROWS() AS num_results', [ req.query.q, req.query.q, offset, limit ], function query(err, results) {
             if (err) { // error, display error
                 res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             } else if (results[0].length === 0) { // no results, display no results message
@@ -122,7 +122,7 @@ app.get('/', function getRoot(req, res) {
             } else if (results[0].length === 1 && !req.query.page) { // one result, display it
                 res.redirect('/callsigns/' + results[0][0].callsign);
             } else { // many results, display a paginated list
-                res.render('index', { err: null, result: null, resultSet: results[0], pagination: { page: page, pageCount: Math.ceil(results[1][0].num_results / limit) }, num_results: results[1][0].num_results, criterion: req.query.criterion });
+                res.render('index', { err: null, result: null, resultSet: results[0], pagination: { page: page, pageCount: Math.ceil(results[1][0].num_results / limit) }, num_results: results[1][0].num_results, q: req.query.q });
             }
             conn.release();
         });
