@@ -8,6 +8,7 @@ process.on('exit', function () {
     pool.end();
 });
 
+var moment = require('moment');
 var hbs = require('hbs');
 var paginate = require('handlebars-paginate');
 var express = require('express');
@@ -84,7 +85,7 @@ app.get('/', function (req, res, next) {
             if (err || result.length !== 1) {
                 res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             } else {
-                res.locals.last_update = result[0].last_update;
+                res.locals.last_update = moment(result[0].last_update).locale(i18n.getLocale(req)).format('LLL');
                 next();
             }
             conn.release();
