@@ -28,7 +28,7 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <title>{{__ "Callsigns"}}</title>
+    <title>{{__ "Callsigns"}}{{#if result}} - {{result.callsign}}{{/if}}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -47,8 +47,8 @@
           {{__ "Lang"}} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a href="/lang/en">{{__ "English"}}</a></li>
-          <li><a href="/lang/fr">{{__ "Français"}}</a></li>
+          <li><a id="en" href="/lang/en">{{__ "English"}}</a></li>
+          <li><a id="fr" href="/lang/fr">{{__ "Français"}}</a></li>
         </ul>
       </div>
 
@@ -64,14 +64,14 @@
       {{#if err}}
         <hr/>
         <div class="alert alert-{{err.type}}" role="alert">
-          {{err.message}}
+          <span id="err-message">{{err.message}}</span>
         </div>
       {{/if}}
       {{#if result}}
         <hr/>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">{{result.callsign}}</h3>
+            <h3 class="panel-title"><span id="callsign">{{result.callsign}}</span></h3>
           </div>
         </div>
         <div class="panel panel-default">
@@ -80,9 +80,9 @@
           </div>
           <div class="panel-body">
             <p>
-              {{result.first_name}} {{result.surname}}<br/>
-              {{#if result.address_line}}{{result.address_line}}<br/>{{/if}}
-              {{#if result.city}}{{result.city}},{{/if}} {{result.prov_cd}} {{result.postal_code}}
+              <span id="first_name">{{result.first_name}}</span> <span id="surname">{{result.surname}}</span><br/>
+              {{#if result.address_line}}<span id="address_line">{{result.address_line}}</span><br/>{{/if}}
+              {{#if result.city}}<span id="city">{{result.city}}</span>,{{/if}} <span id="prov_cd">{{result.prov_cd}}</span> <span id="postal_code">{{result.postal_code}}</span>
             </p>
           </div>
         </div>
@@ -93,19 +93,19 @@
           <div class="panel-body">
             <ul>
               {{#if result.qual_a}}
-                <li>{{__ "Basic"}}</li>
+                <li><span id="qual_a">{{__ "Basic"}}</span></li>
               {{/if}}
               {{#if result.qual_e}}
-                <li>{{__ "Basic with Honours"}}</li>
+                <li><span id="qual_e">{{__ "Basic with Honours"}}</span></li>
               {{/if}}
               {{#if result.qual_d}}
-                <li>{{__ "Advanced"}}</li>
+                <li><span id="qual_d">{{__ "Advanced"}}</span></li>
               {{/if}}
               {{#if result.qual_b}}
-                <li>{{__ "Morse Code (5 WPM)"}}</li>
+                <li><span id="qual_b">{{__ "Morse Code (5 WPM)"}}</span></li>
               {{/if}}
               {{#if result.qual_c}}
-                <li>{{__ "Morse Code (12 WPM)"}}</li>
+                <li><span id="qual_c">{{__ "Morse Code (12 WPM)"}}</span></li>
               {{/if}}
             </ul>
           </div>
@@ -117,10 +117,10 @@
             </div>
             <div class="panel-body">
               <p>
-                {{result.club_name}}<br/>
-                {{#if result.club_name_2}}{{result.club_name_2}}<br/>{{/if}}
-                {{#if result.club_address}}{{result.club_address}}<br/>{{/if}}
-                {{#if result.club_city}}{{result.club_city}},{{/if}} {{result.club_prov_cd}} {{result.club_postal_code}}
+                <span id="club_name">{{result.club_name}}</span><br/>
+                {{#if result.club_name_2}}<span id="club_name_2">{{result.club_name_2}}</span><br/>{{/if}}
+                {{#if result.club_address}}<span id="club_address">{{result.club_address}}</span><br/>{{/if}}
+                {{#if result.club_city}}<span id="club_city">{{result.club_city}}</span>,{{/if}} <span id="club_prov_cd">{{result.club_prov_cd}}</span> <span id="club_postal_code">{{result.club_postal_code}}</span>
               </p>
             </div>
           </div>
@@ -157,7 +157,7 @@
       {{__ "The complete title of the materials reproduced is 'Amateur Call Sign List (delimited TXT format)' by Industry Canada."}}
       {{__ "The reproduction is a copy of the version available at:"}} <a href="{{__ "http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip"}}">{{__ "http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip"}}</a>.
       (<a href="{{__ "http://www.ic.gc.ca/eic/site/icgc.nsf/eng/h_07033.html"}}">{{__ "Terms and Conditions"}}</a>).
-      {{#if last_update}}{{__ "Date modified:"}} {{last_update}}.{{/if}}
+      {{#if last_update}}{{__ "Date modified:"}} <span id="last_update">{{last_update}}</span>.{{/if}}
       {{__ "Contact me by email:"}} <a href="mailto:linuxgeek@gmail.com">linuxgeek@gmail.com</a>.
     </div>
 
