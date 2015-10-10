@@ -8,6 +8,7 @@ process.on('exit', function onExit() {
     pool.end();
 });
 
+var pjson = require('./package.json');
 var moment = require('moment');
 var hbs = require('hbs');
 var paginate = require('handlebars-paginate');
@@ -69,6 +70,12 @@ app.use(morgan('combined', { stream: accessLogStream })); // logging
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
+
+app.use(function getPkgNameVer(req, res, next) {
+    res.locals.name = pjson.name;
+    res.locals.version = pjson.version;
+    next();
+});
 
 // lookup last_update timestamp
 app.use(function lookupLastUpdate(req, res, next) {
