@@ -53,6 +53,10 @@ Configure the service:
     systemctl enable callsigns
     systemctl start callsigns
 
+## Testing
+
+Once the service is up and running, execute `npm test` to perform some end-to-end tests.
+
 ## License
 
 Code License:
