@@ -4,6 +4,7 @@
   "description": "Query the Canadian Amateur Radio Callsign Database",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "pretest": "jshint ./index.js",
     "test": " casperjs test test/callsigns.test.js",
     "postinstall": "cp -n config.json.example config.json||true"
