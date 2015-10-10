@@ -75,7 +75,7 @@ app.use(function lookupLastUpdate(req, res, next) {
 
     pool.getConnection(function getConnection(err, conn) {
         if (err) {
-            res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
+            res.status(500).render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             if (conn) {
                 conn.release();
             }
@@ -83,7 +83,7 @@ app.use(function lookupLastUpdate(req, res, next) {
         }
         conn.query('SELECT MAX(last_update) AS last_update FROM sync', function query(err, result) {
             if (err || result.length !== 1) {
-                res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
+                res.status(500).render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             } else {
                 res.locals.last_update = moment(result[0].last_update).locale(i18n.getLocale(req)).format('LLL');
                 next();
@@ -108,7 +108,7 @@ app.get('/', function getRoot(req, res) {
 
     pool.getConnection(function getConnection(err, conn) {
         if (err) {
-            res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
+            res.status(500).render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             if (conn) {
                 conn.release();
             }
@@ -116,9 +116,9 @@ app.get('/', function getRoot(req, res) {
         }
         conn.query('SELECT SQL_CALC_FOUND_ROWS *, MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) AS relevance FROM callsigns WHERE MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) HAVING relevance > 0.2 ORDER BY relevance DESC LIMIT ?, ?; SELECT FOUND_ROWS() AS num_results', [ req.query.q, req.query.q, offset, limit ], function query(err, results) {
             if (err) { // error, display error
-                res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
+                res.status(500).render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             } else if (results[0].length === 0) { // no results, display no results message
-                res.render('index', { err: { code: 404, type: 'info', message: res.__("No results found.") }, result: null, resultSet: null });
+                res.status(404).render('index', { err: { code: 404, type: 'info', message: res.__("No results found.") }, result: null, resultSet: null });
             } else if (results[0].length === 1 && !req.query.page) { // one result, display it
                 res.redirect('/callsigns/' + results[0][0].callsign);
             } else { // many results, display a paginated list
@@ -133,7 +133,7 @@ app.get('/', function getRoot(req, res) {
 app.get('/callsigns/:callsign', function getCallsign(req, res) {
     pool.getConnection(function getConnect(err, conn) {
         if (err) {
-            res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
+            res.status(500).render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             if (conn) {
                 conn.release();
             }
@@ -141,9 +141,9 @@ app.get('/callsigns/:callsign', function getCallsign(req, res) {
         }
         conn.query('SELECT * FROM callsigns WHERE callsign = ?', [ req.params.callsign ], function query(err, results) {
             if (err || results.length > 1) { // error, display error
-                res.render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
+                res.status(500).render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
             } else if (results.length === 0) { // no results, display no results message
-                res.render('index', { err: { code: 404, type: 'info', message: res.__("No results found.") }, result: null, resultSet: null });
+                res.status(404).render('index', { err: { code: 404, type: 'info', message: res.__("No results found.") }, result: null, resultSet: null });
             } else if (results.length === 1) { // one result, display it
                 res.render('index', { err: null, result: results[0], resultSet: null });
             }
