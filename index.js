@@ -59,6 +59,7 @@ var accessLogStream = FileStreamRotator.getStream({
 
 var app = express();
 
+app.set('trust proxy', 'loopback');
 app.set('view engine', 'hbs');
 
 app.use(helmet());          // put on the helmet before anything else
