@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "jshint ./index.js",
+    "test": " casperjs test test/callsigns.test.js",
     "postinstall": "cp -n config.json.example config.json||true"
   },
   "repository": {
@@ -39,7 +40,9 @@
     "moment": "^2.10.6"
   },
   "devDependencies": {
-    "jshint": "^2.8.0"
+    "casperjs": "^1.1.0-beta3",
+    "jshint": "^2.8.0",
+    "phantomjs": "^1.9.18"
   },
   "jshintConfig": {
     "bitwise": true,
