@@ -78,29 +78,6 @@ app.use(function getPkgNameVer(req, res, next) {
     next();
 });
 
-// lookup last_update timestamp
-app.use(function lookupLastUpdate(req, res, next) {
-
-    pool.getConnection(function getConnection(err, conn) {
-        if (err) {
-            res.status(500).render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
-            if (conn) {
-                conn.release();
-            }
-            return;
-        }
-        conn.query('SELECT MAX(last_update) AS last_update FROM sync', function query(err, result) {
-            if (err || result.length !== 1) {
-                res.status(500).render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
-            } else {
-                res.locals.last_update = moment(result[0].last_update).locale(i18n.getLocale(req)).format('LLL');
-                next();
-            }
-            conn.release();
-        });
-    });
-});
-
 // perform search (if q is supplied), render the page, result set, or error. If a single result is found, redirect to that page
 app.get('/', function getRoot(req, res) {
 
