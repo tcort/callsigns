@@ -8,11 +8,11 @@ process.on('exit', function onExit() {
     pool.end();
 });
 
-var pjson = require('./package.json');
 var moment = require('moment');
 var hbs = require('hbs');
 var paginate = require('handlebars-paginate');
 var express = require('express');
+var expressPackageJson = require('express-package-json');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var helmet = require('helmet');
@@ -72,11 +72,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
-app.use(function getPkgNameVer(req, res, next) {
-    res.locals.name = pjson.name;
-    res.locals.version = pjson.version;
-    next();
-});
+app.use(expressPackageJson(path.join(__dirname, 'package.json'))); // make package.json available to templates via res.locals.pkg
 
 // perform search (if q is supplied), render the page, result set, or error. If a single result is found, redirect to that page
 app.get('/', function getRoot(req, res) {
