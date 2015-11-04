@@ -1,6 +1,6 @@
 # callsigns
 
-This is the code that powers [callsigns.ca](http://callsigns.ca).
+This is the code that powers [callsigns.ca](https://www.callsigns.ca).
 It started with the simple desire for a simple mobile friendly way of
 searching the Canadian Callsign Database and ended with me developing
 my own website.
@@ -15,6 +15,7 @@ my own website.
 * node.js
 * npm
 * bower
+* letsencrypt
 
 ## Installation
 
@@ -40,6 +41,13 @@ Add a cron job to refresh the database:
 
     crontab -e
     15 1   *   *   *   /var/node/callsigns/db/refresh.sh >/dev/null 2>&1
+
+Get SSL Certificates:
+
+    git clone https://github.com/letsencrypt/letsencrypt
+    cd letsencrypt
+    ./letsencrypt-auto --agree-dev-preview --server \
+        https://acme-v01.api.letsencrypt.org/directory certonly
 
 Configure nginx:
 
