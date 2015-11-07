@@ -9,6 +9,7 @@ my own website.
 
 * systemd
 * nginx
+* openssl
 * mysql
 * wget
 * unzip
@@ -48,6 +49,10 @@ Get SSL Certificates:
     cd letsencrypt
     ./letsencrypt-auto --agree-dev-preview --server \
         https://acme-v01.api.letsencrypt.org/directory certonly
+
+Generate DHE Parameters:
+
+    openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
 
 Configure nginx:
 
