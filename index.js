@@ -63,6 +63,12 @@ app.set('trust proxy', 'loopback');
 app.set('view engine', 'hbs');
 
 app.use(helmet());          // put on the helmet before anything else
+app.use(helmet.hsts({
+  maxAge: 10886400000,     // Must be at least 18 weeks to be approved by Google
+  includeSubdomains: true, // Must be enabled to be approved by Google
+  preload: true
+}));
+
 app.use(cookieParser());    // needed for i18n
 app.use(i18n.init);         // setup i18n before we do anything that outputs text in a particular language
 app.use(morgan('combined', { stream: accessLogStream })); // logging
