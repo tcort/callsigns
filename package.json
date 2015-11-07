@@ -1,6 +1,6 @@
 {
   "name": "callsigns",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Query the Canadian Amateur Radio Callsign Database",
   "main": "index.js",
   "scripts": {
