@@ -13,7 +13,7 @@ server {
 
   server_tokens off;
 
-  add_header Strict-Transport-Security "max-age=10886400; includeSubDomains; preload"
+  add_header Strict-Transport-Security "max-age=10886400; includeSubDomains; preload";
 
   if ( $scheme != https ) {
     return 301 https://www.callsigns.ca$request_uri;
