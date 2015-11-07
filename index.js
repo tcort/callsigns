@@ -15,7 +15,6 @@ var express = require('express');
 var expressPackageJson = require('express-package-json');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
-var helmet = require('helmet');
 var path = require('path');
 var fs = require('fs');
 var FileStreamRotator = require('file-stream-rotator');
@@ -61,8 +60,8 @@ var app = express();
 
 app.set('trust proxy', 'loopback');
 app.set('view engine', 'hbs');
+app.disable('x-powered-by');
 
-app.use(helmet());          // put on the helmet before anything else
 app.use(cookieParser());    // needed for i18n
 app.use(i18n.init);         // setup i18n before we do anything that outputs text in a particular language
 app.use(morgan('combined', { stream: accessLogStream })); // logging
