@@ -64,6 +64,12 @@ app.disable('x-powered-by');
 
 app.use(cookieParser());    // needed for i18n
 app.use(i18n.init);         // setup i18n before we do anything that outputs text in a particular language
+app.use(function (req, res, next) {
+    res.locals.locale = res.getLocale();
+    res.locals.locales = Object.keys(res.getCatalog(''));
+    next();
+});
+
 app.use(morgan('combined', { stream: accessLogStream })); // logging
 
 // static routes first -- there is more static content than dynamic.
