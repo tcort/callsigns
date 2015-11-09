@@ -8,7 +8,6 @@ process.on('exit', function onExit() {
     pool.end();
 });
 
-var moment = require('moment');
 var hbs = require('hbs');
 var paginate = require('handlebars-paginate');
 var express = require('express');
