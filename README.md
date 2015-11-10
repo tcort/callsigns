@@ -7,12 +7,14 @@ my own website.
 
 ## Features
 
-* mobile friendly design
-* no advertisements
-* no login required
-* no tracking
-* no social media
-* bilingual
+* mobile friendly design that also works on the desktop and in the terminal
+* bilingual user interface (English and French)
+* no advertisements nor any form of monetization (strictly non-commercial)
+* no login required to access any part of the site
+* no social media buttons to distract you
+* no tracking/analytics beyond standard HTTP server access logs
+* no cookies beyond an ephemeral session cookie for language preference
+* free and open source code
 
 ## Requirements
 
