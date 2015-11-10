@@ -64,7 +64,8 @@ app.disable('etag');
 
 app.use(cookieParser());    // needed for i18n
 app.use(i18n.init);         // setup i18n before we do anything that outputs text in a particular language
-app.use(function (req, res, next) {
+app.use(function i18n(req, res, next) {
+    res.header('Content-Language', res.getLocale());
     res.locals.locale = res.getLocale();
     res.locals.locales = Object.keys(res.getCatalog(''));
     next();

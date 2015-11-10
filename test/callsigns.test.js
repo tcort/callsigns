@@ -135,22 +135,25 @@ casper.test.begin('Go directly to a callsign page belonging to a club', function
 
 casper.test.begin('i18n', function suite(test) {
 
-    casper.start("http://localhost:3000/", function() {
+    casper.start("http://localhost:3000/", function(res) {
 
         test.assertHttpStatus(200);
         test.assertTitleMatch(/Callsigns/, 'title in English');
+        test.assertEquals(res.headers.get('Content-Language'), 'en');
         this.click('#fr');
 
-    }).then(function() {
+    }).then(function(res) {
 
         test.assertHttpStatus(200);
         test.assertTitleMatch(/Indicatifs/, 'title in French');
+        test.assertEquals(res.headers.get('Content-Language'), 'fr');
         this.click('#en');
 
-    }).then(function() {
+    }).then(function(res) {
 
         test.assertHttpStatus(200);
         test.assertTitleMatch(/Callsigns/, 'title in English');
+        test.assertEquals(res.headers.get('Content-Language'), 'en');
         this.click('#fr');
 
     }).run(function() {
