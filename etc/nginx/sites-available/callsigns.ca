@@ -15,6 +15,9 @@ server {
 
   server_tokens off;
 
+  add_header Cache-Control "private, no-cache, no-store, must-revalidate";
+  add_header Expires "Sat, 01 Jan 2000 00:00:00 GMT";
+  add_header Pragma "no-cache";
   add_header Strict-Transport-Security "max-age=10886400; includeSubDomains; preload";
   add_header X-Content-Type-Options nosniff;
   add_header X-Download-Options noopen;
