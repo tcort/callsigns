@@ -5,6 +5,15 @@ It started with the simple desire for a simple mobile friendly way of
 searching the Canadian Callsign Database and ended with me developing
 my own website.
 
+## Features
+
+* mobile friendly design
+* no advertisements
+* no login required
+* no tracking
+* no social media
+* bilingual
+
 ## Requirements
 
 * systemd
