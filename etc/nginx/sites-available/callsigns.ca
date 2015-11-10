@@ -15,6 +15,7 @@ server {
 
   server_tokens off;
 
+  add_header Content-Security-Policy "Content-Security-Policy: default-src 'self'";
   add_header Strict-Transport-Security "max-age=10886400; includeSubDomains; preload";
   add_header X-Content-Type-Options nosniff;
   add_header X-Download-Options noopen;
