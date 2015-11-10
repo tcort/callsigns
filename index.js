@@ -60,6 +60,7 @@ var app = express();
 app.set('trust proxy', 'loopback');
 app.set('view engine', 'hbs');
 app.disable('x-powered-by');
+app.disable('etag');
 
 app.use(cookieParser());    // needed for i18n
 app.use(i18n.init);         // setup i18n before we do anything that outputs text in a particular language
