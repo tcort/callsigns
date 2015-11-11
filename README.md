@@ -19,6 +19,7 @@ my own website.
 ## Requirements
 
 * systemd
+* iptables
 * nginx
 * openssl
 * mysql
@@ -40,6 +41,12 @@ Install the dependencies:
 
     bower install
     npm install
+
+Configure iptables:
+
+    iptables-restore < ./etc/iptables/rules.v4
+    ip6tables-restore < ./etc/iptables/rules.v6
+    apt-get install iptables-persistent
 
 Configure:
 
