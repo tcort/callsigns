@@ -80,15 +80,13 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 
 app.use(expressPackageJson(path.join(__dirname, 'package.json'))); // make package.json available to templates via res.locals.pkg
 
-// perform search (if q is supplied), render the page, result set, or error. If a single result is found, redirect to that page
+// landing page
 app.get('/', function getRoot(req, res) {
+    res.render('index');
+});
 
-    // render page if no search q was supplied (no error, no result, no result set)
-    if (!req.query.q || typeof req.query.q !== 'string') {
-        res.render('index', { err: null, result: null, resultSet: null });
-        return;
-    }
-
+// perform search, render the page, result set, or error. If a single result is found, redirect to that page
+app.get('/search', function getSearchResults(req, res) {
     var page = req.query.page || 1;
     var limit = 10;
     var offset = limit * (page - 1);

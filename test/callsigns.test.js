@@ -5,8 +5,8 @@ casper.test.begin('Search for non-existent callsign', function suite(test) {
         test.assertHttpStatus(200);
 
         // perform a search
-        test.assertExists('form[action="/"]', "search form found");
-        this.fill('form[action="/"]', {
+        test.assertExists('form[action="/search"]', "search form found");
+        this.fill('form[action="/search"]', {
             q: "kb1epr"
         }, true);
 
@@ -30,8 +30,8 @@ casper.test.begin('Search for existing callsign belonging to an individual', fun
         test.assertHttpStatus(200);
 
         // perform a search
-        test.assertExists('form[action="/"]', "search form found");
-        this.fill('form[action="/"]', {
+        test.assertExists('form[action="/search"]', "search form found");
+        this.fill('form[action="/search"]', {
             q: "va2epr"
         }, true);
 
@@ -63,8 +63,8 @@ casper.test.begin('Search for existing callsign belonging to a club', function s
         test.assertHttpStatus(200);
 
         // perform a search
-        test.assertExists('form[action="/"]', "search form found");
-        this.fill('form[action="/"]', {
+        test.assertExists('form[action="/search"]', "search form found");
+        this.fill('form[action="/search"]', {
             q: "va3ovq"
         }, true);
 
