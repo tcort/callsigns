@@ -27,7 +27,6 @@ my own website.
 * unzip
 * node.js
 * npm
-* bower
 * letsencrypt
 
 ## Installation
@@ -39,7 +38,6 @@ Grab the source code:
 
 Install the dependencies:
 
-    bower install
     npm install
 
 Configure iptables:

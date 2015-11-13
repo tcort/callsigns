@@ -76,7 +76,8 @@ app.use(morgan('combined', { stream: accessLogStream })); // logging
 // static routes first -- there is more static content than dynamic.
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'bower_components')));
+app.use(express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist')));
+app.use('/js', express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist')));
 
 app.use(expressPackageJson(path.join(__dirname, 'package.json'))); // make package.json available to templates via res.locals.pkg
 

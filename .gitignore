@@ -1,5 +1,4 @@
 .DS_STORE
-bower_components
 config.json
 node_modules
 db/amateur_delim.txt
