@@ -6,3 +6,4 @@ A list of tasks I'm considering doing:
 * improve search query
   * searching for 'QC' should get all results from Quebec
 * h1 headings for SEO
+* automated testing on each commit (travis-ci)
