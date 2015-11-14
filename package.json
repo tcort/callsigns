@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "pretest": "jshint ./index.js",
-    "test": "forever start index.js && sleep 5 && casperjs test test/callsigns.test.js && forever stopall",
+    "test": " casperjs test test/callsigns.test.js",
     "postinstall": "cp -n config.json.example config.json||true"
   },
   "repository": {
@@ -44,8 +44,7 @@
   "devDependencies": {
     "casperjs": "^1.1.0-beta3",
     "jshint": "^2.8.0",
-    "phantomjs": "^1.9.18",
-    "forever": "^0.15.1"
+    "phantomjs": "^1.9.18"
   },
   "jshintConfig": {
     "bitwise": true,
