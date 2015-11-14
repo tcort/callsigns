@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "pretest": "jshint ./index.js",
-    "test": "forever start index.js && sleep 10 && casperjs test test/callsigns.test.js && forever stopall",
+    "test": "forever start index.js && sleep 5 && casperjs test test/callsigns.test.js && forever stopall",
     "postinstall": "cp -n config.json.example config.json||true"
   },
   "repository": {
