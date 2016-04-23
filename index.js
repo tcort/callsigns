@@ -83,6 +83,7 @@ app.use(function loggingConfig(req, res, next) {
         client_ip: req.ip
     });
     res.set('X-Request-ID', req.id);
+    res.locals.request_id = req.id;
     next();
 });
 
@@ -92,6 +93,7 @@ app.use(function i18n(req, res, next) {
     res.header('Content-Language', res.getLocale());
     res.locals.locale = res.getLocale();
     res.locals.locales = Object.keys(res.getCatalog(''));
+    res.locals[res.locals.locale] = true;
     next();
 });
 

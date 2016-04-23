@@ -46,14 +46,11 @@
 
     <div class="container">
 
-      <div class="dropdown pull-right">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          {{__ "Lang"}} <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a id="en" href="/lang/en">{{__ "English"}}</a></li>
-          <li><a id="fr" href="/lang/fr">{{__ "Français"}}</a></li>
-        </ul>
+      <div class="pull-right">
+        <div class="btn-group" role="group" aria-label="...">
+          <a id="en" class="btn {{#if en}}btn-primary{{^}}btn-default{{/if}}" role="button" href="/lang/en">{{__ "English"}}</a>
+          <a id="fr" class="btn {{#if fr}}btn-primary{{^}}btn-default{{/if}}" role="button" href="/lang/fr">{{__ "Français"}}</a>
+        </div>
       </div>
 
       <hr/>
@@ -168,6 +165,8 @@
 
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
+
+  <!-- Request ID: {{request_id}} -->
 
 </body>
 </html>
