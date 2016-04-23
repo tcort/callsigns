@@ -12,7 +12,6 @@ my own website.
 * no advertisements nor any form of monetization (strictly non-commercial)
 * no login required to access any part of the site
 * no social media buttons to distract you
-* no tracking/analytics beyond standard HTTP server access logs
 * no cookies beyond an ephemeral session cookie for language preference
 * free and open source code
 
@@ -58,6 +57,13 @@ Add a cron job to refresh the database:
 
     crontab -e
     15 1   *   *   *   /var/node/callsigns/db/refresh.sh >/dev/null 2>&1
+
+Configure `rsyslog`:
+
+    sudo -e /etc/rsyslog.conf
+    local5.*                        /var/log/callsigns.log
+    sudo service rsyslog restart
+    logger -p local5.info "Test"
 
 Get SSL Certificates:
 

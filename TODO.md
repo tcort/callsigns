@@ -7,4 +7,4 @@ A list of tasks I'm considering doing:
   * searching for 'QC' should get all results from Quebec
 * h1 headings for SEO
 * automated testing on each commit (travis-ci)
-* figure out how to make it globally installable (i.e. `npm install -g callsigns`). Should be easier without `bower install` step.
+* figure out how to make it globally installable (i.e. `npm install -g callsigns`).
