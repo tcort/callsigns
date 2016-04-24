@@ -49,12 +49,14 @@
       <div class="row">
         <div class="col-lg-12">
           <form class="form-callsign" method="get" action="/search">
-            <div class="input-group">
-              <label for="inputq" class="sr-only">{{__ "Search Criteria"}}</label>
-              <input name="q" type="text" id="inputq" class="form-control" placeholder="" required autofocus>
-              <span class="input-group-btn">
-                <button class="btn btn-primary" type="submit">{{__ "Search"}}</button>
-              </span>
+            <div class="form-group">
+              <div class="input-group">
+                <label for="inputq" class="sr-only">{{__ "Search Criteria"}}</label>
+                <input name="q" type="text" id="inputq" class="form-control" placeholder="" required>
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" type="submit">{{__ "Search"}}</button>
+                </span>
+              </div>
             </div>
           </form>
         </div>
@@ -77,32 +79,14 @@
               <div class="panel-heading">
                 <h3 class="panel-title"><span id="callsign">{{result.callsign}}</span></h3>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">{{__ "Details"}}</h3>
-              </div>
               <div class="panel-body">
+                <h4>{{__ "Details"}}</h4>
                 <p>
                   <span id="first_name">{{result.first_name}}</span> <span id="surname">{{result.surname}}</span><br/>
                   {{#if result.address_line}}<span id="address_line">{{result.address_line}}</span><br/>{{/if}}
                   {{#if result.city}}<span id="city">{{result.city}}</span>,{{/if}} <span id="prov_cd">{{result.prov_cd}}</span> <span id="postal_code">{{result.postal_code}}</span>
                 </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">{{__ "Qualifications"}}</h3>
-              </div>
-              <div class="panel-body">
+                <h4>{{__ "Qualifications"}}</h4>
                 <ul>
                   {{#if result.qual_a}}
                     <li><span id="qual_a">{{__ "Basic"}}</span></li>
@@ -120,63 +104,65 @@
                     <li><span id="qual_c">{{__ "Morse Code (12 WPM)"}}</span></li>
                   {{/if}}
                 </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        {{#if result.club_prov_cd}}
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class="panel-title">{{__ "Club Details"}}</h3>
-                </div>
-                <div class="panel-body">
+               {{#if result.club_prov_cd}}
+                 <h4>{{__ "Club Details"}}</h4>
                   <p>
                     <span id="club_name">{{result.club_name}}</span><br/>
                     {{#if result.club_name_2}}<span id="club_name_2">{{result.club_name_2}}</span><br/>{{/if}}
                     {{#if result.club_address}}<span id="club_address">{{result.club_address}}</span><br/>{{/if}}
                     {{#if result.club_city}}<span id="club_city">{{result.club_city}}</span>,{{/if}} <span id="club_prov_cd">{{result.club_prov_cd}}</span> <span id="club_postal_code">{{result.club_postal_code}}</span>
                   </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        {{/if}}
-      {{/if}}
-
-
-
-      {{#if resultSet}}
-        <div class="list-group">
-          <div class="row">
-            <div class="col-lg-12">
-              {{#each resultSet as |r|}}
-                 <a href="/callsigns/{{r.callsign}}" class="list-group-item">{{r.callsign}} - {{#if r.club_prov_cd}}{{r.club_name}} {{r.club_name_2}} -{{/if}} {{r.first_name}} {{r.surname}}</a>
-              {{/each}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="text-center">
-                <nav>
-                  <ul class="pagination">
-                    {{#paginate pagination type="previous"}}
-                      <li {{#if disabled}}class="disabled"{{/if}}><a href="/search?page={{n}}&q={{../q}}">&laquo;</a></li>
-                    {{/paginate}}
-                    {{#paginate pagination type="middle" limit="7"}}
-                      <li {{#if active}}class="active"{{/if}}><a href="/search?page={{n}}&q={{../q}}">{{n}}</a></li>
-                    {{/paginate}}
-                    {{#paginate pagination type="next"}}
-                      <li {{#if disabled}}class="disabled"{{/if}}><a href="/search?page={{n}}&q={{../q}}">&raquo;</a></li>
-                    {{/paginate}}
-                  </ul>
-                </nav>
+               {{/if}}
               </div>
             </div>
           </div>
         </div>
       {{/if}}
+
+      {{#if resultSet}}
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="list-group">
+              {{#each resultSet as |r|}}
+                 <a href="/callsigns/{{r.callsign}}" class="list-group-item">{{r.callsign}} - {{#if r.club_prov_cd}}{{r.club_name}} {{r.club_name_2}} -{{/if}} {{r.first_name}} {{r.surname}}</a>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="text-center">
+              <nav>
+                <ul class="pagination">
+                  {{#paginate pagination type="previous"}}
+                    <li {{#if disabled}}class="disabled"{{/if}}><a href="/search?page={{n}}&amp;q={{../q}}">&laquo;</a></li>
+                  {{/paginate}}
+                  {{#paginate pagination type="middle" limit="7"}}
+                    <li {{#if active}}class="active"{{/if}}><a href="/search?page={{n}}&amp;q={{../q}}">{{n}}</a></li>
+                  {{/paginate}}
+                  {{#paginate pagination type="next"}}
+                    <li {{#if disabled}}class="disabled"{{/if}}><a href="/search?page={{n}}&amp;q={{../q}}">&raquo;</a></li>
+                  {{/paginate}}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+
+      <div class="row">
+        <div class="col-lg-12 small">
+          <div class="bs-component">
+            <div class="well">
+              {{__ "The complete title of the materials reproduced is 'Amateur Call Sign List (delimited TXT format)' by Industry Canada."}}
+              {{__ "The reproduction is a copy of the version available at:"}} <a href="{{__ "http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip"}}">{{__ "http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip"}}</a>.
+              (<a href="{{__ "http://www.ic.gc.ca/eic/site/icgc.nsf/eng/h_07033.html"}}">{{__ "Terms and Conditions"}}</a>).
+              {{__ "Contact me by email:"}} <a href="mailto:linuxgeek@gmail.com">linuxgeek@gmail.com</a>.
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -184,15 +170,6 @@
             <a id="en" class="btn {{#if en}}btn-primary{{^}}btn-default{{/if}}" role="button" href="/lang/en">{{__ "English"}}</a>
             <a id="fr" class="btn {{#if fr}}btn-primary{{^}}btn-default{{/if}}" role="button" href="/lang/fr">{{__ "Français"}}</a>
           </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-12 small">
-          {{__ "The complete title of the materials reproduced is 'Amateur Call Sign List (delimited TXT format)' by Industry Canada."}}
-          {{__ "The reproduction is a copy of the version available at:"}} <a href="{{__ "http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip"}}">{{__ "http://apc-cap.ic.gc.ca/datafiles/amateur_delim.zip"}}</a>.
-          (<a href="{{__ "http://www.ic.gc.ca/eic/site/icgc.nsf/eng/h_07033.html"}}">{{__ "Terms and Conditions"}}</a>).
-          {{__ "Contact me by email:"}} <a href="mailto:linuxgeek@gmail.com">linuxgeek@gmail.com</a>.
         </div>
       </div>
 

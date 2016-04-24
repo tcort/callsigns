@@ -2,7 +2,7 @@ body {
   background-color: #eee;
 }
 
-.row {
+.container {
   margin-top: 1.0em;
+  margin-bottom: 1.0em;
 }
-
