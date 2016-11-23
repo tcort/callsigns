@@ -8,7 +8,7 @@ process.on('exit', function onExit() {
     pool.end();
 });
 
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 var log = require('ssi-logger');
 var hbs = require('hbs');
 var paginate = require('handlebars-paginate');
