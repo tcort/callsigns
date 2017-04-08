@@ -104,7 +104,7 @@ app.use(morgan('combined', { stream: accessLogStream })); // logging
 var staticOpts = app.get('env') === "production" ? { maxAge: "1y" } : { };
 
 // static routes first -- there is more static content than dynamic.
-app.use('/static/' + pkg.version + '/', favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use('/static/' + pkg.version + '/', express.static(path.join(__dirname, 'public'), staticOpts));
 app.use('/static/' + pkg.version + '/', express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist'), staticOpts));
 app.use('/static/' + pkg.version + '/js/', express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist'), staticOpts));
