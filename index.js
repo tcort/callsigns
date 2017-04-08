@@ -21,6 +21,7 @@ var fs = require('fs');
 var FileStreamRotator = require('file-stream-rotator');
 var morgan = require('morgan');
 var i18n = require('i18n');
+var pkg = require('./package.json');
 
 // configure logging
 
@@ -99,11 +100,14 @@ app.use(function i18n(req, res, next) {
 
 app.use(morgan('combined', { stream: accessLogStream })); // logging
 
+// when in production, cache for a year
+var staticOpts = app.get('env') === "production" ? { maxAge: "1y" } : { };
+
 // static routes first -- there is more static content than dynamic.
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist')));
-app.use('/js', express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist')));
+app.use('/static/' + pkg.version + '/', favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use('/static/' + pkg.version + '/', express.static(path.join(__dirname, 'public'), staticOpts));
+app.use('/static/' + pkg.version + '/', express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist'), staticOpts));
+app.use('/static/' + pkg.version + '/js/', express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist'), staticOpts));
 
 app.use(expressPackageJson(path.join(__dirname, 'package.json'))); // make package.json available to templates via res.locals.pkg
 
