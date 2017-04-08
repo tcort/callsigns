@@ -8,7 +8,7 @@ process.on('exit', function onExit() {
     pool.end();
 });
 
-var uuid = require('node-uuid');
+var uuid = require('uuid/v1');
 var log = require('ssi-logger');
 var hbs = require('hbs');
 var paginate = require('handlebars-paginate');
@@ -78,7 +78,7 @@ app.disable('x-powered-by');
 app.disable('etag');
 
 app.use(function loggingConfig(req, res, next) {
-    req.id = uuid.v1();
+    req.id = uuid();
     req.log = log.defaults({
         request_id: req.id,
         client_ip: req.ip
