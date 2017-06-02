@@ -123,19 +123,21 @@ app.get('/search', function getSearchResults(req, res) {
     var limit = 10;
     var offset = limit * (page - 1);
 
-    pool.query('SELECT SQL_CALC_FOUND_ROWS *, MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) AS relevance FROM callsigns WHERE MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN NATURAL LANGUAGE MODE) HAVING relevance > 0.2 ORDER BY relevance DESC LIMIT ?, ?; SELECT FOUND_ROWS() AS num_results', [ req.query.q, req.query.q, offset, limit ], function query(err, results) {
+    var q = typeof req.query.q === 'string' ? req.query.q.replace(/[^A-Za-z0-9_]/g, ' ').trim() + '*' : '';
+
+    pool.query('SELECT SQL_CALC_FOUND_ROWS *, MATCH(`callsign`,`first_name`,`surname`,`address_line`,`city`,`prov_cd`,`postal_code`,`club_name`,`club_name_2`,`club_address`,`club_city`,`club_prov_cd`,`club_postal_code`) AGAINST (? IN BOOLEAN MODE) AS relevance FROM callsigns HAVING relevance > 0.2 ORDER BY relevance DESC LIMIT ?, ?; SELECT FOUND_ROWS() AS num_results', [ q, offset, limit ], function query(err, results) {
         if (err) { // error, display error
-            req.log('ERR', 'Callsign Query: Error', err, { q: req.query.q });
+            req.log('ERR', 'Callsign Query: Error', err, { q: q });
             res.status(500).render('index', { err: { code: 500, type: 'danger', message: res.__("Database error. Please try again later.") }, result: null, resultSet: null });
         } else if (results[0].length === 0) { // no results, display no results message
-            req.log('INFO', 'Callsign Query: No results', { q: req.query.q });
+            req.log('INFO', 'Callsign Query: No results', { q: q });
             res.status(404).render('index', { err: { code: 404, type: 'info', message: res.__("No results found.") }, result: null, resultSet: null });
         } else if (results[0].length === 1 && !req.query.page) { // one result, display it
-            req.log('INFO', 'Callsign Query: Single Result', { q: req.query.q, callsign: results[0][0].callsign });
+            req.log('INFO', 'Callsign Query: Single Result', { q: q, callsign: results[0][0].callsign });
             res.redirect('/callsigns/' + results[0][0].callsign);
         } else { // many results, display a paginated list
-            req.log('INFO', 'Callsign Query: Multiple Results', { q: req.query.q, count: results[1][0].num_results });
-            res.render('index', { err: null, result: null, resultSet: results[0], pagination: { page: page, pageCount: Math.ceil(results[1][0].num_results / limit) }, num_results: results[1][0].num_results, q: req.query.q });
+            req.log('INFO', 'Callsign Query: Multiple Results', { q: q, count: results[1][0].num_results });
+            res.render('index', { err: null, result: null, resultSet: results[0], pagination: { page: page, pageCount: Math.ceil(results[1][0].num_results / limit) }, num_results: results[1][0].num_results, q: q });
         }
     });
 });
