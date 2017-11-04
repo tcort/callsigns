@@ -1,3 +1,11 @@
+# Deprecated
+
+This project has ended. I've taken down the website and ceased development
+of this application. I'm leaving the code up on github in the hope that
+it's useful for someone. Enjoy looking at this little piece of history.
+
+-----------
+
 # callsigns
 
 This is the code that powers [callsigns.ca](https://www.callsigns.ca).
